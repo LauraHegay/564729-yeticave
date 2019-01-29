@@ -1,7 +1,7 @@
 # Личный проект «YetiCave»
 
 * Студент: [Лаура Хегай](https://up.htmlacademy.ru/php/8/user/564729).
-* Наставник: [Илья Кондрашов] (https://htmlacademy.ru/profile/id644427).
+* Наставник: `Неизвестно`.
 
 ---
 
