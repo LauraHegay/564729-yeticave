@@ -43,7 +43,7 @@ $advertisement=[
 
 // format_text() - функция для форматирования суммы и добавления к ней знака рубля
 function format_text ($price_value){
-    ceil($price_value);
+    $price_value=ceil($price_value);
     if($price_value>1000) {
         $price_value=number_format($price_value,0,'',' ');
     }
