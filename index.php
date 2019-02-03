@@ -45,8 +45,8 @@ $advertisement=[
  *
  * Функция округляет, форматирует число с разделением на группы по три цифры и затем добавляет знак рубля
  * 
- * @param $price_value - цена товара указанная в объявлении
- * @return float|string
+ * @param int|foat|string $price_value - цена товара указанная в объявлении
+ * @return string
  */
 function price_format ($price_value){
     $price_value=ceil($price_value);
