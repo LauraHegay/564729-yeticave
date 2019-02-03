@@ -40,9 +40,15 @@ $advertisement=[
         'url' => 'img/lot-6.jpg'
     ]
 ];
-
-// format_text() - функция для форматирования суммы и добавления к ней знака рубля
-function format_text ($price_value){
+/**
+ * Функция для форматирование суммы и добавления к ней знака рубля
+ *
+ * Функция округляет, форматирует число с разделением на группы по три цифры и затем добавляет знак рубля
+ * 
+ * @param $price_value - цена товара указанная в объявлении
+ * @return float|string
+ */
+function price_format ($price_value){
     $price_value=ceil($price_value);
     if($price_value>1000) {
         $price_value=number_format($price_value,0,'',' ');
@@ -122,7 +128,7 @@ function format_text ($price_value){
                       <div class="lot__state">
                           <div class="lot__rate">
                               <span class="lot__amount">Начальная цена</span>
-                              <span class="lot__cost"><?=format_text($value['price']); ?></span>
+                              <span class="lot__cost"><?=price_format($value['price']); ?></span>
                           </div>
                           <div class="lot__timer timer">
                               12:23
