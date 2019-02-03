@@ -1,5 +1,8 @@
-<?php $categories=["Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"];?>
-<?php $advertisement=[
+<?php
+$is_auth = rand(0, 1);
+$user_name = 'Лаура'; // укажите здесь ваше имя
+$categories=["Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"];
+$advertisement=[
     [
         'title' => '2014 Rossignol District Snowboard',
         'category' => 'Доски и лыжи',
@@ -37,12 +40,24 @@
         'url' => 'img/lot-6.jpg'
     ]
 ];
+/**
+ * Функция для форматирование суммы и добавления к ней знака рубля
+ *
+ * Функция округляет, форматирует число с разделением на группы по три цифры и затем добавляет знак рубля
+ * 
+ * @param $price_value - цена товара указанная в объявлении
+ * @return float|string
+ */
+function price_format ($price_value){
+    $price_value=ceil($price_value);
+    if($price_value>1000) {
+        $price_value=number_format($price_value,0,'',' ');
+    }
+    $price_value=$price_value.'<b class="rub">р</b>';
+    return $price_value;
+}
 ?>
-<?php
-$is_auth = rand(0, 1);
 
-$user_name = 'Лаура'; // укажите здесь ваше имя
-?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -113,7 +128,7 @@ $user_name = 'Лаура'; // укажите здесь ваше имя
                       <div class="lot__state">
                           <div class="lot__rate">
                               <span class="lot__amount">Начальная цена</span>
-                              <span class="lot__cost"><?=$value['price']; ?><b class="rub">р</b></span>
+                              <span class="lot__cost"><?=price_format($value['price']); ?></span>
                           </div>
                           <div class="lot__timer timer">
                               12:23
