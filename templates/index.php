@@ -14,7 +14,7 @@
             <h2>Открытые лоты</h2>
         </div>
         <ul class="lots__list">
-            <?php foreach ($advertisement as $key => $value): ?>
+            <?php foreach ($advertisements as $key => $value): ?>
                 <?=include_template('card.php',['value'=>$value]); ?>
             <?php endforeach; ?>
         </ul>

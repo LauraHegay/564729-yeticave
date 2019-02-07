@@ -32,4 +32,22 @@ function price_format ($price_value){
     $price_value=$price_value.'<b class="rub">р</b>';
     return $price_value;
 }
-?>
+
+/**
+ * Функция для расчета времени до завершения лота
+ *
+ * Функция рассчитывает время оставшееся до завершения лота и выводит время в формате "чч:мм"
+ *
+ * нет параметров
+ * @return string
+ */
+function lot_end_time(){
+    date_default_timezone_set("Europe/Moscow");
+    $time_midnight=strtotime("tomorrow midnight");
+    $time_diff=($time_midnight-time());
+    $hours=floor($time_diff/3600);
+    $minutes=floor(($time_diff%3600)/60);
+    if($hours<10 ? $hours="0".$hours:$hours);
+    if($minutes<10 ? $minutes="0".$minutes:$minutes);
+    print ($hours.":".$minutes."\n");
+};
