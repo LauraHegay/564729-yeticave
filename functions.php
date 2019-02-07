@@ -47,7 +47,5 @@ function lot_end_time(){
     $time_diff=($time_midnight-time());
     $hours=floor($time_diff/3600);
     $minutes=floor(($time_diff%3600)/60);
-    if($hours<10 ? $hours="0".$hours:$hours);
-    if($minutes<10 ? $minutes="0".$minutes:$minutes);
-    print ($hours.":".$minutes."\n");
+    return sprintf('%02d:%02d', $hours, $minutes);
 };
