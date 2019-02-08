@@ -6,7 +6,7 @@ $user_name = 'Лаура'; // укажите здесь ваше имя
 
 $page_content = include_template('index.php', [
     'categories'=>$categories,
-    'advertisement'=>$advertisement]);
+    'advertisements'=>$advertisements]);
 $layout_content = include_template('layout.php', [
     'title' => 'Yeti - Главная страница',
     'is_auth' => $is_auth,
@@ -16,6 +16,5 @@ $layout_content = include_template('layout.php', [
 ]);
 
 print($layout_content);
-?>
 
 
