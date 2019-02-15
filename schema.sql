@@ -5,16 +5,14 @@ USE yeticave_db;
 
 CREATE TABLE users (
 	id INT(11) NOT NULL AUTO_INCREMENT,
-	NAME CHAR(255) NOT NULL,
+	name CHAR(255) NOT NULL,
 	date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	email CHAR(128) NOT NULL,
-	PASSWORD CHAR(64) NOT NULL,
-	lot_id CHAR(11),
+	password CHAR(255) NOT NULL,
 	avatar_path CHAR(128),
 	contact TEXT,
-	rate_id CHAR(11),
 	PRIMARY KEY(id)
-)
+);
 
 CREATE TABLE lots (
 	id INT(11) NOT NULL AUTO_INCREMENT,
@@ -29,23 +27,23 @@ CREATE TABLE lots (
 	user_id INT(11) NOT NULL,
 	win_user_id INT(11) NOT NULL,
 	PRIMARY KEY(id)
-)
+);
 
 CREATE TABLE categories (
 	id INT(11) NOT NULL AUTO_INCREMENT,
 	name CHAR(50) NOT NULL,
 	PRIMARY KEY(id)
-)
+);
 
 CREATE TABLE rates (
 	id INT(11) NOT NULL AUTO_INCREMENT,
 	date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	sum_prise CHAR(50),
+	sum_price CHAR(50),
 	id_user INT(11) NOT NULL,
 	id_lot INT(11) NOT NULL,
 	PRIMARY KEY(id)
-)
+);
 
-CREATE INDEX c_title ON lots(title)
-CREATE INDEX c_category ON lots(category_id)
+CREATE INDEX c_title ON lots(title);
+CREATE INDEX c_category ON lots(category_id);
 ;
