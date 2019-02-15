@@ -14,6 +14,13 @@ CREATE TABLE users (
 	PRIMARY KEY(id)
 );
 
+CREATE TABLE categories (
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	name CHAR(50) NOT NULL,
+	PRIMARY KEY(id)
+);
+
+
 CREATE TABLE lots (
 	id INT(11) NOT NULL AUTO_INCREMENT,
 	date_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -26,14 +33,12 @@ CREATE TABLE lots (
 	category_id INT(11) NOT NULL,
 	user_id INT(11) NOT NULL,
 	win_user_id INT(11) NOT NULL,
-	PRIMARY KEY(id)
+	PRIMARY KEY(id),
+	CONSTRAINT FK_lots_categories FOREIGN KEY (category_id) REFERENCES categories(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT FK_lots_users FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT FK_lots_users_2 FOREIGN KEY (win_user_id) REFERENCES users(id)
 );
 
-CREATE TABLE categories (
-	id INT(11) NOT NULL AUTO_INCREMENT,
-	name CHAR(50) NOT NULL,
-	PRIMARY KEY(id)
-);
 
 CREATE TABLE rates (
 	id INT(11) NOT NULL AUTO_INCREMENT,
@@ -41,9 +46,10 @@ CREATE TABLE rates (
 	sum_price CHAR(50),
 	id_user INT(11) NOT NULL,
 	id_lot INT(11) NOT NULL,
-	PRIMARY KEY(id)
+	PRIMARY KEY(id),
+	CONSTRAINT FK_rates_users FOREIGN KEY (id_user) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT FK_rates_lots FOREIGN KEY (id_lot) REFERENCES lots(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE INDEX c_title ON lots(title);
 CREATE INDEX c_category ON lots(category_id);
-;
