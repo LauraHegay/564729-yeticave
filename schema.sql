@@ -28,11 +28,11 @@ CREATE TABLE lots (
 	title CHAR(255) NOT NULL,
 	description TEXT ,
 	image_path CHAR(255),
-	start_price INT(11) NOT NULL,
-	step_rate INT(11) NOT NULL,
-	category_id INT(11) NOT NULL,
-	user_id INT(11) NOT NULL,
-	win_user_id INT(11) NOT NULL,
+	start_price INT(11),
+	step_rate INT(11),
+	category_id INT(11),
+	user_id INT(11),
+	win_user_id INT(11),
 	PRIMARY KEY(id),
 	CONSTRAINT FK_lots_categories FOREIGN KEY (category_id) REFERENCES categories(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	CONSTRAINT FK_lots_users FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
@@ -53,3 +53,4 @@ CREATE TABLE rates (
 
 CREATE INDEX c_title ON lots(title);
 CREATE INDEX c_category ON lots(category_id);
+CREATE INDEX date_create_id ON lots (date_create, id);
