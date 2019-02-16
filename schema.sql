@@ -52,5 +52,4 @@ CREATE TABLE rates (
 );
 
 CREATE INDEX c_title ON lots(title);
-CREATE INDEX c_category ON lots(category_id);
-CREATE INDEX date_create_id ON lots (date_create, id);
+CREATE INDEX date_create_title ON lots (date_create, title);
