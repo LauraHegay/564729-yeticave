@@ -51,5 +51,4 @@ CREATE TABLE rates (
 	CONSTRAINT FK_rates_lots FOREIGN KEY (id_lot) REFERENCES lots(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE INDEX c_title ON lots(title);
 CREATE INDEX date_create_title ON lots (date_create, title);
