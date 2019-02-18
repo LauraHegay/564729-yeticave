@@ -30,8 +30,9 @@ SELECT * FROM categories;
 
 /*получить самые новые, открытые лоты. 
 Каждый лот должен включать название, стартовую цену, ссылку на изображение, цену, название категории;*/
-SELECT title, start_price, image_path, categories.name FROM lots
-JOIN categories ON lots.category_id=categories.id
+SELECT lots.id, title, start_price, image_path, MAX(rates.sum_price), lots.category_id FROM lots, rates, categories
+WHERE rates.id_lot=lots.id
+GROUP BY rates.id_lot
 ORDER BY lots.date_create DESC
 LIMIT 5;
 
