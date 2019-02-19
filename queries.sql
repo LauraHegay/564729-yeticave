@@ -13,11 +13,11 @@ VALUES('Иван', 'ivan@mail.ru', 'fgkjkdsk','img/ivan.jpg', 'г. Москва 
 		
 INSERT INTO lots(date_end, title, category_id, start_price, step_rate, image_path, user_id, win_user_id) 
 VALUES('2019-02-25', '2014 Rossignol District Snowboard', 13, 10999, 100, 'img/lot-1.jpg',1, null),
-		('2019-02-20', 'DC Ply Mens 2016/2017 Snowboard', 13, 159999, 200, 'img/lot-2.jpg',1, null),
-		('2019-02-19', 'Крепления Union Contact Pro 2015 года размер L/XL',14, 8000,   500, 'img/lot-3.jpg',2, null),
-		('2019-02-18', 'Ботинки для сноуборда DC Mutiny Charocal', 16, 10999,100, 'img/lot-4.jpg',2, null),
-		('2019-02-17', 'Куртка для сноуборда DC Mutiny Charocal', 17, 7500, 300, 'img/lot-5.jpg',2, null),
-		('2019-02-27', 'Маска Oakley Canopy', 19, 5400, 100, 'img/lot-6.jpg', 2, null);
+		('2019-03-01', 'DC Ply Mens 2016/2017 Snowboard', 13, 159999, 200, 'img/lot-2.jpg',1, null),
+		('2019-02-28', 'Крепления Union Contact Pro 2015 года размер L/XL',14, 8000,   500, 'img/lot-3.jpg',2, null),
+		('2019-02-27', 'Ботинки для сноуборда DC Mutiny Charocal', 16, 10999,100, 'img/lot-4.jpg',2, null),
+		('2019-02-28', 'Куртка для сноуборда DC Mutiny Charocal', 17, 7500, 300, 'img/lot-5.jpg',2, null),
+		('2019-02-28', 'Маска Oakley Canopy', 19, 5400, 100, 'img/lot-6.jpg', 2, null);
 		
 INSERT INTO rates(sum_price, id_user, id_lot) 
 VALUES(10999, 2, 25),

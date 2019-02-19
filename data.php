@@ -1,6 +1,6 @@
 <?php
 $categories=["Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"];
-$advertisements=[
+/*$advertisements=[
     [
         'title' => '2014 Rossignol District Snowboard',
         'category' => 'Доски и лыжи',
@@ -38,3 +38,4 @@ $advertisements=[
         'url' => 'img/lot-6.jpg'
     ]
 ];
+*/
