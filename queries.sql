@@ -33,6 +33,7 @@ SELECT * FROM categories;
 SELECT title, start_price, image_path, categories.name, ifnull(max(rates.sum_price),lots.start_price) FROM lots
 JOIN categories ON lots.category_id=categories.id
 LEFT JOIN rates ON lots.id=rates.id_lot
+WHERE lots.date_end >CURRENT_DATE()
 group by lots.id
 ORDER BY lots.date_create DESC
 LIMIT 5;
