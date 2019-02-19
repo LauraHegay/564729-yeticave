@@ -49,3 +49,20 @@ function lot_end_time(){
     $minutes=floor(($time_diff%3600)/60);
     return sprintf('%02d:%02d', $hours, $minutes);
 };
+/**
+ * Функция преобразует объект результата, полученной из БД записи  в двумерный массив
+ *
+ * @param $result - объект результата
+ * @param $con - ресурс соединения
+ * @return array|null
+ */
+
+function object_in_array($result, $con){
+    if (!$result) {
+        $error = "Ошибка MySQL: " . mysqli_error($con);
+        print $error;
+    }
+    else {
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+}

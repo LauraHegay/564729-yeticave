@@ -4,8 +4,8 @@ require_once('data.php'); //подключаем сценарий с данны�
 $con= mysqli_init();
 mysqli_options($con, MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
 mysqli_real_connect($con, "localhost", "root", "", "yeticave_db");
-if ($con == false) {
-    print("Ошибка подключения: " . mysqli_connect_error());
+if ($con === false) {
+    exit("Ошибка подключения: " . mysqli_connect_error());
 }
 else {
     mysqli_set_charset($con, "utf8");
@@ -19,12 +19,8 @@ ORDER BY lots.date_create DESC
 LIMIT 9";
     $result = mysqli_query($con, $sql);
     $result_lots = mysqli_query($con, $sql_lots);
-    if (!$result || !$result_lots) {
-        $error = mysqli_error($con);
-        print("Ошибка MySQL: " . $error);
-    }
-    $cat = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    $lots=mysqli_fetch_all($result_lots, MYSQLI_ASSOC);
+    $cat = object_in_array($result, $con);
+    $lots=object_in_array($result_lots, $con);
 }
 $is_auth = rand(0, 1);
 $user_name = 'Лаура'; // укажите здесь ваше имя
