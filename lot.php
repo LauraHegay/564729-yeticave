@@ -12,6 +12,7 @@ if (isset($_GET['id'])) {
 }
 else {
     http_response_code(404);
+    header("Location: http:pages/404.html");
 }
 $sql = "SELECT categories.name FROM categories";
 $sql_lots = "SELECT title, start_price, image_path, categories.name as category, ifnull(max(rates.sum_price),lots.start_price) as current_price, description FROM lots
@@ -21,12 +22,14 @@ WHERE lots.id =$id_lot";
 $result = mysqli_query($con, $sql);
 $result_lots = mysqli_query($con, $sql_lots);
 $cat = object_in_array($result, $con);
-$lots=object_in_array($result_lots, $con);
+if ($result) {
+    $lots=mysqli_fetch_assoc($result_lots);
+}
 $is_auth = rand(0, 1);
 $user_name = 'Лаура'; // укажите здесь ваше имя
 
 $page_content = include_template('lot.php', [
-    'categories'=>$categories,
+    'categories'=>$cat,
     'lot'=>$lots]);
 $layout_content = include_template('layout.php', [
     'title' => 'Yeti - Страница каталога',
