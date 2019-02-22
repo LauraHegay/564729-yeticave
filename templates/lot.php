@@ -1,4 +1,3 @@
-<main>
     <nav class="nav">
         <ul class="nav__list container">
             <?php foreach ($categories as $value): ?>
@@ -13,10 +12,10 @@
         <div class="lot-item__content">
             <div class="lot-item__left">
                 <div class="lot-item__image">
-                    <img src="<?=$lot['image_path']; ?>" width="730" height="548" alt="Сноуборд">
+                    <img src="<?=$lot['image_path']; ?>" width="730" height="548" alt="<?=$lot['title']; ?>">
                 </div>
                 <p class="lot-item__category">Категория: <span><?=$lot['category']; ?></span></p>
-                <p class="lot-item__description"><?=htmlspecialchars($lot[0]['description']); ?></p>
+                <p class="lot-item__description"><?=htmlspecialchars($lot['description']); ?></p>
             </div>
             <div class="lot-item__right">
                 <div class="lot-item__state">
@@ -99,4 +98,3 @@
             </div>
         </div>
     </section>
-</main>
