@@ -14,22 +14,30 @@ $result = mysqli_query($con, $sql);
 $cat = object_in_array($result, $con);
 if (isset($_GET['id'])) {
     $id_lot=intval($_GET['id']);
-    $sql_lots = "SELECT title, start_price, image_path, categories.name, ifnull(max(rates.sum_price),lots.start_price) FROM lots
+    $sql_lots = "SELECT title, start_price as sum_price, image_path, categories.name FROM lots
 JOIN categories ON lots.category_id=categories.id
-LEFT JOIN rates ON lots.id=rates.id_lot
-WHERE lots.id =$id_lot
-group by lots.id";
+WHERE lots.id =$id_lot";
     $result_lots = mysqli_query($con, $sql_lots);
     $lots=mysqli_fetch_assoc($result_lots);
-}
+    var_dump($result_lots->num_rows ===1);
+    if ($result_lots->num_rows ===1){
 
-if (!is_null($lots)) {
-    $page_content = include_template('lot.php', [
-        'categories'=>$cat,
-        'lot'=>$lots]);
-}
-else {
-    $error = mysqli_error($con);
+        $sum_lot="SELECT max(rates.sum_price) as sum_price from rates
+WHERE rates.id_lot=$id_lot";
+        $result_sum_lots = mysqli_fetch_assoc(mysqli_query($con, $sum_lot));
+        if(is_null($result_sum_lots['sum_price'])){
+            $result_sum_lots=['sum_price'=>$lots['sum_price']];
+        }
+        $page_content = include_template('lot.php', [
+            'categories'=>$cat,
+            'lot'=>$lots,
+            'sum_price'=>$result_sum_lots]);
+    } else {
+        $page_content = include_template('error.php', [
+            'categories' => $cat
+        ]);
+    }
+} else {
     $page_content = include_template('error.php', [
         'categories' => $cat
     ]);
