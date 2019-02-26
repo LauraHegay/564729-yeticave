@@ -28,16 +28,17 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
     }
     if (isset($_FILES['photo2']['name'])){
         $tmp_name=$_FILES['photo2']['tmp_name'];
-        $path=$_FILES['photo2']['name'];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $extension=pathinfo($_FILES['photo2']['name'],PATHINFO_EXTENSION);
         if($tmp_name!==""){
             $file_type=finfo_file($finfo, $tmp_name);}
         if ($file_type!=="image/png" and $file_type!=="image/jpeg"){
             $errors['photo2']='Загрузите картинку в формате jpg, jpeg, png';
         }
         else {
-            move_uploaded_file($tmp_name,'img/'.$path);
-            $lot['photo2']='img/'.$path;
+            $tmp_name=uniqid() .".".$extension;
+            $lot['photo2']='img/'.$tmp_name;
+            move_uploaded_file($_FILES['photo2']['tmp_name'],'img/'.$tmp_name);
         }
     }
     else {
@@ -61,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
         $res = mysqli_stmt_execute($stmt);
         $id_lot = mysqli_insert_id($con);
         header("Location: lot.php?id=$id_lot");
+        exit;
     }
 }
 else {
