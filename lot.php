@@ -2,19 +2,17 @@
 require_once('functions.php'); //подключаем сценарий с функцией-шаблонизатором
 $is_auth = rand(0, 1);
 $user_name = 'Лаура'; // укажите здесь ваше имя
-$con= mysqli_init();
-mysqli_options($con, MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
-mysqli_real_connect($con, "localhost", "root", "", "yeticave_db");
+$con=db_connection();
 if ($con === false) {
     exit("Ошибка подключения: " . mysqli_connect_error());
 }
-mysqli_set_charset($con, "utf8");
+
 $sql = "SELECT categories.name FROM categories";
 $result = mysqli_query($con, $sql);
 $cat = object_in_array($result, $con);
 if (isset($_GET['id'])) {
     $id_lot=intval($_GET['id']);
-    $sql_lots = "SELECT title, start_price as sum_price, image_path, categories.name FROM lots
+    $sql_lots = "SELECT title, start_price as sum_price, image_path, categories.name, description FROM lots
 JOIN categories ON lots.category_id=categories.id
 WHERE lots.id =$id_lot";
     $result_lots = mysqli_query($con, $sql_lots);

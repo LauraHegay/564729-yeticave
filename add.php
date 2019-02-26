@@ -1,12 +1,10 @@
 <?php
 require_once('functions.php'); //подключаем сценарий с функцией-шаблонизатором
-$con= mysqli_init();
-mysqli_options($con, MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
-mysqli_real_connect($con, "localhost", "root", "", "yeticave_db");
+$con=db_connection();
 if ($con === false) {
     exit("Ошибка подключения: " . mysqli_connect_error());
 }
-mysqli_set_charset($con, "utf8");
+
 $sql = "SELECT categories.id ,categories.name FROM categories";
 $result = mysqli_query($con, $sql);
 $cat = object_in_array($result, $con);
@@ -15,13 +13,6 @@ $user_name = 'Лаура';
 if ($_SERVER['REQUEST_METHOD']=='POST'){
     $lot=$_POST;
     $required_fields=['lot-name','category','message','lot-rate','lot-step','lot-date'];
-    $dict = ['lot-name' => 'Название',
-             'category' => 'Категория',
-             'message' => 'Описание',
-             'photo2' => 'Изображение',
-             'lot-rate' => 'Ставка',
-             'lot-step' => 'Шаг ставки',
-             'lot-date' => 'Дата создания'];
     $errors=[];
     foreach ($lot as $key => $value){
         if ($key=="lot-rate"){
@@ -65,27 +56,16 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
             'dict' => $dict]);
     }
     else {
-        $sql = 'INSERT INTO lots (date_create, date_end, title, category_id, start_price, step_rate, image_path, user_id) VALUES (NOW(), ?, ?, ?, ?, ?, ?,1)';
-
-        $stmt = db_get_prepare_stmt($con, $sql, [$lot['lot-date'],$lot['lot-name'], $lot['category'], $lot['lot-rate'], $lot['lot-step'], $lot['photo2']]);
+        $sql = 'INSERT INTO lots (date_create, date_end, title, category_id, start_price, step_rate, image_path, description, user_id) VALUES (NOW(), ?, ?, ?, ?, ?,?, ?,1)';
+        $stmt = db_get_prepare_stmt($con, $sql, [$lot['lot-date'],$lot['lot-name'], $lot['category'], $lot['lot-rate'], $lot['lot-step'], $lot['photo2'],$lot['message']]);
         $res = mysqli_stmt_execute($stmt);
         $id_lot = mysqli_insert_id($con);
-        //$url="Location: lot.php?id=$id_lot";
         header("Location: lot.php?id=$id_lot");
     }
 }
 else {
     $page_content = include_template('add.php', ['categories'=>$cat]);
 }
-
-
-/*
-
-$page_content = include_template('add.php', [
-    'categories'=>$cat,
-    'lot'=>$lots,
-    'sum_price'=>$result_sum_lots]);
-*/
 
 $layout_content = include_template('layout.php', [
     'title' => 'Yeti - Добавление лота',

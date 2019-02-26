@@ -17,7 +17,7 @@
         $value = isset($lot['lot-name']) ? $lot['lot-name'] : ""; ?>
         <div class="form__item <?=$classname;?>">
             <label for="lot-name">Наименование</label>
-            <input id="lot-name" type="text" name="lot-name" placeholder="Введите наименование лота" value="<?=$value;?>">
+            <input id="lot-name" type="text" name="lot-name" placeholder="Введите наименование лота" value="<?=htmlspecialchars($value);?>">
             <span class="form__error">Введите наименование лота</span>
         </div>
         <?php $classname=isset($errors['category'])? "form__item--invalid":"";
@@ -36,7 +36,7 @@
     $value = isset($lot['message']) ? $lot['message'] : ""; ?>
     <div class="form__item form__item--wide <?=$classname;?>">
       <label for="message">Описание</label>
-      <textarea id="message" name="message" placeholder="Напишите описание лота"><?=$value;?></textarea>
+      <textarea id="message" name="message" placeholder="Напишите описание лота"><?=htmlspecialchars($value);?></textarea>
       <span class="form__error">Напишите описание лота</span>
     </div>
     <?php $classname=isset($errors['photo2'])? "form__item--invalid":"form__item--uploaded ";

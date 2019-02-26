@@ -1,13 +1,11 @@
 <?php
 require_once('functions.php'); //подключаем сценарий с функцией-шаблонизатором
 require_once('data.php'); //подключаем сценарий с данными
-$con= mysqli_init();
-mysqli_options($con, MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
-mysqli_real_connect($con, "localhost", "root", "", "yeticave_db");
+$con=db_connection();
 if ($con === false) {
     exit("Ошибка подключения: " . mysqli_connect_error());
 }
-    mysqli_set_charset($con, "utf8");
+
     $sql = "SELECT categories.name FROM categories";
     $sql_lots = "SELECT lots.id as id_lot, title, start_price, image_path, categories.name, ifnull(max(rates.sum_price),lots.start_price) FROM lots
 JOIN categories ON lots.category_id=categories.id

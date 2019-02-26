@@ -110,3 +110,14 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
     }
     return $stmt;
 }
+
+/**Функция для подключения к базе данных yeticave_db
+ * @return mysqli
+ */
+function db_connection() {
+    $con= mysqli_init();
+    mysqli_options($con, MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
+    mysqli_real_connect($con, "localhost", "root", "", "yeticave_db");
+    mysqli_set_charset($con, "utf8");
+    return $con;
+}
