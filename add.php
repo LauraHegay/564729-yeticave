@@ -38,8 +38,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
     if (isset($_FILES['photo2']['name'])){
         $tmp_name=$_FILES['photo2']['tmp_name'];
         $path=$_FILES['photo2']['name'];
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);//
-        $file_type=finfo_file($finfo, $tmp_name);//С помощью стандартной функции finfo_ получим информацию о типе файле
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        if($tmp_name!==""){
+            $file_type=finfo_file($finfo, $tmp_name);}
         if ($file_type!=="image/png" and $file_type!=="image/jpeg"){
             $errors['photo2']='Загрузите картинку в формате jpg, jpeg, png';
         }
