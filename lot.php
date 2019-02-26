@@ -19,7 +19,6 @@ JOIN categories ON lots.category_id=categories.id
 WHERE lots.id =$id_lot";
     $result_lots = mysqli_query($con, $sql_lots);
     $lots=mysqli_fetch_assoc($result_lots);
-    var_dump($result_lots->num_rows ===1);
     if ($result_lots->num_rows ===1){
 
         $sum_lot="SELECT max(rates.sum_price) as sum_price from rates
