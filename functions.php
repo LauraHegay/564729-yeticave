@@ -66,3 +66,72 @@ function object_in_array($result, $con){
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 }
+
+
+/**
+ * Создает подготовленное выражение на основе готового SQL запроса и переданных данных
+ *
+ * @param $link mysqli Ресурс соединения
+ * @param $sql string SQL запрос с плейсхолдерами вместо значений
+ * @param array $data Данные для вставки на место плейсхолдеров
+ *
+ * @return mysqli_stmt Подготовленное выражение
+ */
+function db_get_prepare_stmt($link, $sql, $data = []) {
+    $stmt = mysqli_prepare($link, $sql);
+
+    if ($data) {
+        $types = '';
+        $stmt_data = [];
+
+        foreach ($data as $value) {
+            $type = null;
+
+            if (is_int($value)) {
+                $type = 'i';
+            }
+            else if (is_string($value)) {
+                $type = 's';
+            }
+            else if (is_double($value)) {
+                $type = 'd';
+            }
+
+            if ($type) {
+                $types .= $type;
+                $stmt_data[] = $value;
+            }
+        }
+
+        $values = array_merge([$stmt, $types], $stmt_data);
+
+        $func = 'mysqli_stmt_bind_param';
+        $func(...$values);
+    }
+    return $stmt;
+}
+
+/**Функция для подключения к базе данных yeticave_db
+ * @return mysqli
+ */
+function db_connection() {
+    $con= mysqli_init();
+    mysqli_options($con, MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
+    mysqli_real_connect($con, "localhost", "root", "", "yeticave_db");
+    mysqli_set_charset($con, "utf8");
+    return $con;
+}
+
+/**
+ * Проверяет, что переданная дата соответствует формату ДД.ММ.ГГГГ
+ * @param string $date строка с датой
+ * @return bool
+ */
+function check_date_format($date) {
+    $result = false;
+    $regexp = '/(\d{2})\.(\d{2})\.(\d{4})/m';
+    if (preg_match($regexp, $date, $parts) && count($parts) == 4) {
+        $result = checkdate($parts[2], $parts[1], $parts[3]);
+    }
+    return $result;
+}
