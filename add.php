@@ -1,9 +1,6 @@
 <?php
 require_once('functions.php'); //подключаем сценарий с функцией-шаблонизатором
-$con=db_connection();
-if ($con === false) {
-    exit("Ошибка подключения: " . mysqli_connect_error());
-}
+require_once('init.php');
 
 $sql = "SELECT categories.id ,categories.name FROM categories";
 $result = mysqli_query($con, $sql);
@@ -67,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
         $res = mysqli_stmt_execute($stmt);
         $id_lot = mysqli_insert_id($con);
         header("Location: lot.php?id=$id_lot");
-        exit;
+        exit();
     }
 }
 else {

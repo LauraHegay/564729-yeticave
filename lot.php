@@ -1,11 +1,8 @@
 <?php
 require_once('functions.php'); //подключаем сценарий с функцией-шаблонизатором
+require_once('init.php');
 $is_auth = rand(0, 1);
 $user_name = 'Лаура'; // укажите здесь ваше имя
-$con=db_connection();
-if ($con === false) {
-    exit("Ошибка подключения: " . mysqli_connect_error());
-}
 
 $sql = "SELECT categories.name FROM categories";
 $result = mysqli_query($con, $sql);
