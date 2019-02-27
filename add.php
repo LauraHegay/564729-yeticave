@@ -16,13 +16,19 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
     $errors=[];
     foreach ($lot as $key => $value){
         if ($key=="lot-rate"){
-            if(!filter_var($value,FILTER_VALIDATE_INT)){
+            if(!filter_var($value,FILTER_VALIDATE_INT)or $value<0 ){
                 $errors[$key]='Заполните поле Ставка корректными данными';
             }
         }
-        elseif ($key=="lot-step"){
-            if(!filter_var($value,FILTER_VALIDATE_INT)){
+        elseif ($key=="lot-step")  {
+            if(!filter_var($value,FILTER_VALIDATE_INT)or $value<0 or is_int($value)){
                 $errors[$key]='Заполните поле Шаг ставки корректными данными';
+            }
+        }
+        elseif ($key=="lot-date")  {
+            $diff = strtotime($value)-strtotime("now");
+            if(!check_date_format($value)or($diff <86400)){
+                $errors[$key]='Заполните поле Дата завершения ставки корректными данными';
             }
         }
     }
@@ -53,8 +59,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
         $page_content = include_template('add.php', [
             'categories'=>$cat,
             'lot'=>$lot,
-            'errors' => $errors,
-            'dict' => $dict]);
+            'errors' => $errors]);
     }
     else {
         $sql = 'INSERT INTO lots (date_create, date_end, title, category_id, start_price, step_rate, image_path, description, user_id) VALUES (NOW(), ?, ?, ?, ?, ?,?, ?,1)';

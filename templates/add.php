@@ -59,7 +59,7 @@
     </div>
     <div class="form__container-three">
         <?php $classname=isset($errors['lot-rate'])? "form__item--invalid":"";
-        $value = isset($lot['lot-rate']) ? $lot['lot-rate'] : ""; ?>
+        $value = isset($lot['lot-rate'])? $lot['lot-rate'] : ""; ?>
       <div class="form__item form__item--small <?=$classname;?>">
         <label for="lot-rate">Начальная цена</label>
         <input id="lot-rate" type="number" name="lot-rate" placeholder="0" value="<?=$value;?>">
@@ -76,7 +76,7 @@
         $value = isset($lot['lot-date']) ? $lot['lot-date'] : ""; ?>
       <div class="form__item <?=$classname;?>">
         <label for="lot-date">Дата окончания торгов</label>
-        <input class="form__input-date" id="lot-date" type="date" name="lot-date" value="<?=$value;?>" >
+        <input class="form__input-date" id="lot-date" type="text" name="lot-date" placeholder="дд.мм.гггг" value="<?=$value;?>" >
         <span class="form__error">Введите дату завершения торгов</span>
       </div>
     </div>
