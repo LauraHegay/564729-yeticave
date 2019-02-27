@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
             }
         }
         elseif ($key=="lot-date")  {
-            $diff = strtotime($value)-strtotime("now");
+            $diff = strtotime($value)-strtotime('today');
             if(!check_date_format($value)or($diff <86400)){
                 $errors[$key]='Заполните поле Дата завершения ставки корректными данными';
             }
@@ -44,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
         else {
             $tmp_name=uniqid() .".".$extension;
             $lot['photo2']='img/'.$tmp_name;
-            move_uploaded_file($_FILES['photo2']['tmp_name'],'img/'.$tmp_name);
         }
     }
     else {
@@ -62,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
             'errors' => $errors]);
     }
     else {
+        move_uploaded_file($_FILES['photo2']['tmp_name'],'img/'.$tmp_name);
         $sql = 'INSERT INTO lots (date_create, date_end, title, category_id, start_price, step_rate, image_path, description, user_id) VALUES (NOW(), ?, ?, ?, ?, ?,?, ?,1)';
         $stmt = db_get_prepare_stmt($con, $sql, [$lot['lot-date'],$lot['lot-name'], $lot['category'], $lot['lot-rate'], $lot['lot-step'], $lot['photo2'],$lot['message']]);
         $res = mysqli_stmt_execute($stmt);
