@@ -15,7 +15,7 @@
     <div class="form__item <?=$classname; ?>"> <!-- form__item--invalid -->
         <label for="email">E-mail*</label>
         <input id="email" type="text" name="email" placeholder="Введите e-mail" value="<?=$value;?>" required>
-        <span class="form__error">Введите e-mail</span>
+        <span class="form__error"><?=$errors['email']; ?></span>
     </div>
     <?php $classname=isset($errors['password'])? "form__item--invalid":"";
     $value = isset($user['password']) ? $user['password'] : ""; ?>

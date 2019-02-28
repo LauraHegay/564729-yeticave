@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
             }
         }
     }
-    if (isset($_FILES['user-avatar']['name'])){
+    if (!empty($_FILES['user-avatar']['name'])){
         $tmp_name=$_FILES['user-avatar']['tmp_name'];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $extension=pathinfo($_FILES['user-avatar']['name'],PATHINFO_EXTENSION);
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
         }
     }
     else {
-        $errors['user-avatar']='Вы не загрузили файл';
+        $user['user-avatar']=" ";
     }
     foreach($required_fields as $key){
         if (empty($_POST[$key])) {
@@ -51,18 +51,23 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
         $sql = "SELECT id FROM users WHERE email = '$email'";
         $result = mysqli_query($con, $sql);
         if (mysqli_num_rows($result) > 0) {
-            $errors[] = 'Пользователь с этим email уже зарегистрирован';
+            $errors['email'] = 'Пользователь с этим email уже зарегистрирован';
+            $page_content = include_template('sing-up.php', ['categories'=>$cat, 'user' => $user,'errors' => $errors]);
         }
         else {
-            move_uploaded_file($_FILES['user-avatar']['tmp_name'],'img/'.$tmp_name);
+            if(!empty($_FILES['user-avatar']['tmp_name']))move_uploaded_file($_FILES['user-avatar']['tmp_name'],'img/'.$tmp_name);
             $password = password_hash($user['password'], PASSWORD_DEFAULT);
             $sql = 'INSERT INTO users (name, email, date_registered, password, avatar_path, contact) VALUES ( ?, ?,NOW(), ?, ?, ?)';
             $stmt = db_get_prepare_stmt($con, $sql, [$user['name'], $user['email'], $password, $user['user-avatar'], $user['message']]);
             $result = mysqli_stmt_execute($stmt);
-        }
-        if ($result && count($errors)) {
-            header("Location: login.php");
-            exit();
+            if (!$result) {
+                $error = mysqli_error($con);
+                print("Ошибка MySQL: " . $error);
+            }
+            else{
+                header("Location: login.php");
+                exit();
+            }
         }
     }
 }
