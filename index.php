@@ -1,10 +1,7 @@
 <?php
 require_once('functions.php'); //подключаем сценарий с функцией-шаблонизатором
 require_once('data.php'); //подключаем сценарий с данными
-$con=db_connection();
-if ($con === false) {
-    exit("Ошибка подключения: " . mysqli_connect_error());
-}
+require_once('init.php');
 
     $sql = "SELECT categories.name FROM categories";
     $sql_lots = "SELECT lots.id as id_lot, title, start_price, image_path, categories.name, ifnull(max(rates.sum_price),lots.start_price) FROM lots
