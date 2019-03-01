@@ -1,3 +1,9 @@
+<?php
+if (!isset($_SESSION['user'])) {
+    http_response_code(403);
+    header("Location: /");
+    exit();
+}?>
 <nav class="nav">
     <ul class="nav__list container">
         <?php foreach ($categories as $value): ?>

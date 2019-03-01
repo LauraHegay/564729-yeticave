@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
         $tmp_name=$_FILES['user-avatar']['tmp_name'];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $extension=pathinfo($_FILES['user-avatar']['name'],PATHINFO_EXTENSION);
-        if($tmp_name!==""){
+        if(empty($_FILES['user-avatar']['error'])){
             $file_type=finfo_file($finfo, $tmp_name);}
         if ($file_type!=="image/png" and $file_type!=="image/jpeg"){
             $errors['user-avatar']='Загрузите картинку в формате jpg, jpeg, png';
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
         }
     }
     else {
-        $user['user-avatar']=" ";
+        $user['user-avatar']='';
     }
     foreach($required_fields as $key){
         if (empty($_POST[$key])) {
@@ -55,7 +55,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
             $page_content = include_template('sing-up.php', ['categories'=>$cat, 'user' => $user,'errors' => $errors]);
         }
         else {
-            if(!empty($_FILES['user-avatar']['tmp_name']))move_uploaded_file($_FILES['user-avatar']['tmp_name'],'img/'.$tmp_name);
+            if(!empty($_FILES['user-avatar']['tmp_name'])) {
+                move_uploaded_file($_FILES['user-avatar']['tmp_name'],'img/'.$tmp_name);
+            }
             $password = password_hash($user['password'], PASSWORD_DEFAULT);
             $sql = 'INSERT INTO users (name, email, date_registered, password, avatar_path, contact) VALUES ( ?, ?,NOW(), ?, ?, ?)';
             $stmt = db_get_prepare_stmt($con, $sql, [$user['name'], $user['email'], $password, $user['user-avatar'], $user['message']]);
@@ -63,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
             if (!$result) {
                 $error = mysqli_error($con);
                 print("Ошибка MySQL: " . $error);
+                exit();
             }
             else{
                 header("Location: login.php");
