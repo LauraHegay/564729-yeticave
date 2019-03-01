@@ -2,11 +2,6 @@
 require_once('functions.php'); //подключаем сценарий с функцией-шаблонизатором
 require_once('init.php');
 
-$sql = "SELECT categories.id ,categories.name FROM categories";
-$result = mysqli_query($con, $sql);
-$cat = object_in_array($result, $con);
-$is_auth = rand(0, 1);
-$user_name = 'Лаура';
 if ($_SERVER['REQUEST_METHOD']=='POST'){
     $user=$_POST;
     $required_fields=['email','password','name','message'];
@@ -22,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
         $tmp_name=$_FILES['user-avatar']['tmp_name'];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $extension=pathinfo($_FILES['user-avatar']['name'],PATHINFO_EXTENSION);
-        if(empty($_FILES['user-avatar']['error'])){
+        if($_FILES['user-avatar']['error']===UPLOAD_ERR_OK){
             $file_type=finfo_file($finfo, $tmp_name);}
         if ($file_type!=="image/png" and $file_type!=="image/jpeg"){
             $errors['user-avatar']='Загрузите картинку в формате jpg, jpeg, png';
@@ -80,7 +75,6 @@ else {
 
 $layout_content = include_template('layout.php', [
     'title' => 'Yeti - Регистрация',
-    'is_auth' => $is_auth,
     'user_name' => $user_name,
     'content' => $page_content,
     'categories' => $cat

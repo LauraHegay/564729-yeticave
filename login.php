@@ -2,21 +2,12 @@
 require_once('functions.php'); //подключаем сценарий с функцией-шаблонизатором
 require_once('init.php');
 
-$sql = "SELECT categories.id ,categories.name FROM categories";
-$result = mysqli_query($con, $sql);
-$cat = object_in_array($result, $con);
-$is_auth = rand(0, 1);
-$user_name = 'Лаура';
 if ($_SERVER['REQUEST_METHOD']=='POST') {
     $form = $_POST;
     $required_fields = ['email', 'password'];
     $errors = [];
-    foreach ($form as $key => $value) {
-        if ($key == "email") {
-            if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                $errors[$key] = 'Заполните поле E-mail корректными данными';
-            }
-        }
+    if (!filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
+        $errors['email'] = 'Заполните поле E-mail корректными данными';
     }
     foreach ($required_fields as $key) {
         if (empty($_POST[$key])) {
@@ -33,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
         $sql = "SELECT * FROM users WHERE email = '$email'";
         $result = mysqli_query($con, $sql);
         $user = $result ? mysqli_fetch_array($result, MYSQLI_ASSOC) : null;
-        if (!count($errors)and $user) {
+        if ($user) {
             if (password_verify($form['password'], $user['password'])) {
                 $_SESSION['user'] = $user;
                 header("Location: index.php");

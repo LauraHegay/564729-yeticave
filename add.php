@@ -2,11 +2,7 @@
 require_once('functions.php'); //подключаем сценарий с функцией-шаблонизатором
 require_once('init.php');
 
-$sql = "SELECT categories.id ,categories.name FROM categories";
-$result = mysqli_query($con, $sql);
-$cat = object_in_array($result, $con);
-$is_auth = rand(0, 1);
-$user_name = 'Лаура';
+$user_name = $_SESSION['user'];
 if ($_SERVER['REQUEST_METHOD']=='POST'){
     $lot=$_POST;
     $required_fields=['lot-name','category','message','lot-rate','lot-step','lot-date'];

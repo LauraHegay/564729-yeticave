@@ -1,5 +1,5 @@
 <?php
-if (!isset($_SESSION['user'])) {
+if (!isset($user_name)) {
     http_response_code(403);
     header("Location: /");
     exit();
