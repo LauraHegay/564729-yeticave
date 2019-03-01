@@ -3,7 +3,6 @@ require_once('functions.php'); //подключаем сценарий с фун
 require_once('data.php'); //подключаем сценарий с данными
 require_once('init.php');
 
-
     $sql_lots = "SELECT lots.id as id_lot, title, start_price, image_path, categories.name, ifnull(max(rates.sum_price),lots.start_price) FROM lots
 JOIN categories ON lots.category_id=categories.id
 LEFT JOIN rates ON lots.id=rates.id_lot
