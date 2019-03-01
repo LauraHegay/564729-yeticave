@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     $form = $_POST;
     $required_fields = ['email', 'password'];
     $errors = [];
-    if (!filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
+    if (!isset($form['email']) || !filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
         $errors['email'] = 'Заполните поле E-mail корректными данными';
     }
     foreach ($required_fields as $key) {
