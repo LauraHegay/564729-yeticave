@@ -23,18 +23,18 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
         $email = mysqli_real_escape_string($con, $form['email']);
         $sql = "SELECT * FROM users WHERE email = '$email'";
         $result = mysqli_query($con, $sql);
-        $user = $result ? mysqli_fetch_array($result, MYSQLI_ASSOC) : null;
-        if ($user) {
+        if ($result) {
+            $user=mysqli_fetch_array($result, MYSQLI_ASSOC);
             if (password_verify($form['password'], $user['password'])) {
                 $_SESSION['user'] = $user;
                 header("Location: index.php");
                 exit();
             } else {
-                $errors['password'] = 'Неверный пароль';
+                $errors['password'] = 'Неверный пароль или пользователя с таким e-mail не существует';
                 $page_content = include_template('login.php', ['form' => $form, 'categories'=>$cat, 'errors' => $errors]);
             }
         } else {
-            $errors['email'] = 'Такой пользователь не найден';
+            $errors['email'] = 'Ошибка при получении записи из базы данных';
             $page_content = include_template('login.php', ['form' => $form, 'categories'=>$cat, 'errors' => $errors]);
         }
     }

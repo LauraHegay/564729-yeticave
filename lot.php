@@ -10,7 +10,6 @@ WHERE lots.id =$id_lot";
     $result_lots = mysqli_query($con, $sql_lots);
     $lots=mysqli_fetch_assoc($result_lots);
     if ($result_lots->num_rows ===1){
-
         $sum_lot="SELECT max(rates.sum_price) as sum_price from rates
 WHERE rates.id_lot=$id_lot";
         $result_sum_lots = mysqli_fetch_assoc(mysqli_query($con, $sum_lot));
