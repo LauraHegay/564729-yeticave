@@ -36,8 +36,6 @@ WHERE rates.id_lot=$id_lot";
     ]);
 }
 
-var_dump($show_form);
-
 $layout_content = include_template('layout.php', [
     'title' => 'Yeti - Страница каталога',
     'is_auth' => $is_auth,

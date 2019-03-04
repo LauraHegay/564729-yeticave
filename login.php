@@ -7,14 +7,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     $required_fields = ['email', 'password'];
     $errors = [];
 
-    if (isset($form['email'])) {
-        if (!filter_var($form['email'], FILTER_VALIDATE_EMAIL)){
+    if (isset($form['email']) and empty($form['email'])) {
+        if (!filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
             $errors['email'] = 'Заполните поле E-mail корректными данными';
-        }else {
+        }
+    }else {
             $errors['email'] = 'Поле не заполнено';
         }
     }
-    if (!isset($form['password'])) {
+if (isset($form['password']) and empty($form['password'])) {
         $errors['password'] = 'Поле не заполнено';
     }
     if (count($errors)) {
