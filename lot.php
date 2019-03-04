@@ -17,8 +17,13 @@ WHERE rates.id_lot=$id_lot";
         if(is_null($result_sum_lots['sum_price'])){
             $result_sum_lots=['sum_price'=>$lots['sum_price']];
         }
-        if($is_auth==1 and $lots['user_id']!=$user_id) {
-            $show_form=1;
+        if($is_auth==1 and $lots['user_id']!=$user_id and strtotime($lots['date_end'])-strtotime('today')>0) {
+            $rate="SELECT * FROM rates
+WHERE rates.id_lot=$id_lot and rates.id_user=$user_id";
+            $rate_count = mysqli_num_rows(mysqli_query($con, $rate));
+            if ($rate_count==0) {
+                $show_form=1;
+            }
         }
         $page_content = include_template('lot.php', [
             'show_form' => $show_form,
