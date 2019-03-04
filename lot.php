@@ -5,7 +5,7 @@ $show_form=0;
 
 if (isset($_GET['id'])) {
     $id_lot=intval($_GET['id']);
-    $sql_lots = "SELECT title, date_end, start_price as sum_price, image_path, categories.name, description, user_id FROM lots
+    $sql_lots = "SELECT title, date_end, start_price as sum_price, step_rate,  image_path, categories.name, description, user_id FROM lots
 JOIN categories ON lots.category_id=categories.id
 WHERE lots.id =$id_lot";
     $result_lots = mysqli_query($con, $sql_lots);

@@ -29,7 +29,7 @@
                         <span class="lot-item__cost"><?=$sum_price['sum_price']; ?></span>
                       </div>
                       <div class="lot-item__min-cost">
-                        Мин. ставка <span>12 000 р</span>
+                        Мин. ставка <span><?=$lot['step_rate']; ?> р</span>
                       </div>
                     </div>
                       <?php if ($show_form==1): ?>
