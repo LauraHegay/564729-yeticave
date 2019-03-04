@@ -32,7 +32,7 @@
                         Мин. ставка <span>12 000 р</span>
                       </div>
                     </div>
-                      <?php if ($is_auth==1): ?>
+                      <?php if ($show_form==1): ?>
                     <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
                       <p class="lot-item__form-item form__item form__item--invalid">
                         <label for="cost">Ваша ставка</label>

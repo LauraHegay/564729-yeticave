@@ -1,10 +1,11 @@
 <?php
 require_once('functions.php'); //подключаем сценарий с функцией-шаблонизатором
 require_once('init.php');
+$show_form=0;
 
 if (isset($_GET['id'])) {
     $id_lot=intval($_GET['id']);
-    $sql_lots = "SELECT title, start_price as sum_price, image_path, categories.name, description FROM lots
+    $sql_lots = "SELECT title, date_end, start_price as sum_price, image_path, categories.name, description, user_id FROM lots
 JOIN categories ON lots.category_id=categories.id
 WHERE lots.id =$id_lot";
     $result_lots = mysqli_query($con, $sql_lots);
@@ -16,7 +17,11 @@ WHERE rates.id_lot=$id_lot";
         if(is_null($result_sum_lots['sum_price'])){
             $result_sum_lots=['sum_price'=>$lots['sum_price']];
         }
+        if($is_auth==1 and $lots['user_id']!=$user_id) {
+            $show_form=1;
+        }
         $page_content = include_template('lot.php', [
+            'show_form' => $show_form,
             'categories'=>$cat,
             'lot'=>$lots,
             'sum_price'=>$result_sum_lots]);
@@ -30,6 +35,8 @@ WHERE rates.id_lot=$id_lot";
         'categories' => $cat
     ]);
 }
+
+var_dump($show_form);
 
 $layout_content = include_template('layout.php', [
     'title' => 'Yeti - Страница каталога',

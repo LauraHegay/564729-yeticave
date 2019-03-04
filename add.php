@@ -58,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
             'errors' => $errors]);
     }
     else {
+        $lot['lot-date'] = date("Y-m-d", strtotime($lot['lot-date']));
         move_uploaded_file($_FILES['photo2']['tmp_name'],'img/'.$tmp_name);
         $sql = 'INSERT INTO lots (date_create, date_end, title, category_id, start_price, step_rate, image_path, description, user_id) VALUES (NOW(), ?, ?, ?, ?, ?,?, ?,?)';
         $stmt = db_get_prepare_stmt($con, $sql, [$lot['lot-date'],$lot['lot-name'], $lot['category'], $lot['lot-rate'], $lot['lot-step'], $lot['photo2'],$lot['message'], $user_id]);
