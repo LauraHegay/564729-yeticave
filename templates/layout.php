@@ -21,11 +21,13 @@
                 <input class="main-header__search-btn" type="submit" name="find" value="Найти">
             </form>
             <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
-
-            <nav class="user-menu">
+            <nav class="user-menu user-menu__list">
                 <?php if ($is_auth==1): ?>
                     <div class="user-menu__logged">
-                        <p><?=$user_name; ?></p>
+                        <p><?=$user_name ?></p>
+                    </div>
+                    <div class="user-menu__item">
+                      <a href="logout.php">Выход</a>
                     </div>
                 <?php else: ?>
                     <ul class="user-menu__list">
