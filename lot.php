@@ -4,8 +4,8 @@ require_once('init.php');
 $show_form=0;
 
 
-if (isset($_GET['id'])) {
-    $id_lot=intval($_GET['id']);
+if (isset($_GET['id'])or isset($_POST['cost'])) {
+    $id_lot=(isset($_GET['id']))? intval($_GET['id']):intval($_POST['id']);
     $sql_lots = "SELECT title, date_end, start_price as sum_price, step_rate,  image_path, categories.name, description, user_id FROM lots
 JOIN categories ON lots.category_id=categories.id
 WHERE lots.id =$id_lot";
@@ -22,9 +22,9 @@ WHERE lots.id =$id_lot";
             $rate_count = mysqli_num_rows(mysqli_query($con, $rate));
             if ($rate_count==0) {
                 $show_form=1;
-                if(!empty($_GET['cost'])){
-                    $rate=intval($_GET['cost']);
-                    if (!filter_var($rate, FILTER_VALIDATE_INT) or $rate<=0 or $rate<(intval($result_sum_lots['sum_price'])+$lots['step_rate'])) {
+                if(!empty($_POST['cost'])){
+                    $rate=intval($_POST['cost']);
+                    if (!filter_var($rate, FILTER_VALIDATE_INT) or $rate<(intval($result_sum_lots['sum_price'])+$lots['step_rate'])) {
                         $errors['cost'] = 'Заполните поле "Ваша ставка" корректными данными';
                     }
                     else {
