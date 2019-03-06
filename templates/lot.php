@@ -32,9 +32,10 @@
                         Мин. ставка <span><?=$lot['step_rate']; ?> р</span>
                       </div>
                     </div>
+                      <?php if ($show_form==1): ?>
                       <?php $classname=isset($errors['cost'])? "form__item--invalid":""; ?>
                     <form class="lot-item__form" action="lot.php" method="post">
-                        <?php if ($show_form==1): ?>
+
                       <p class="lot-item__form-item form__item <?=$classname; ?>">
                         <label for="cost">Ваша ставка</label>
                         <input id="cost" type="text" name="cost" placeholder="<?=$lot['step_rate']; ?>">
