@@ -5,7 +5,10 @@ $show_form=0;
 
 
 if (isset($_GET['id'])or isset($_POST['cost'])) {
-    $id_lot=(isset($_GET['id']))? intval($_GET['id']):intval($_POST['id']);
+    if ($_SERVER['REQUEST_METHOD'] == "GET") {
+        $_SESSION['user']['id_lot']=intval($_GET['id']);
+    }
+    $id_lot=$_SESSION['user']['id_lot'];
     $sql_lots = "SELECT title, date_end, start_price as sum_price, step_rate,  image_path, categories.name, description, user_id FROM lots
 JOIN categories ON lots.category_id=categories.id
 WHERE lots.id =$id_lot";
@@ -35,6 +38,7 @@ WHERE lots.id =$id_lot";
                             $error = mysqli_error($con);
                             print("Ошибка MySQL: " . $error);
                         }
+                        $result_sum_lots['sum_price']=$rate;
                     }
                 }
                 else {
