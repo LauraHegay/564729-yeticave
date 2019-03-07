@@ -33,13 +33,13 @@
                       </div>
                     </div>
                       <?php if ($show_form==1): ?>
-                      <?php $classname=isset($errors['cost'])? "form__item--invalid":""; ?>
+                      <?php $classname=isset($_GET['errors'])? "form__item--invalid":""; ?>
                     <form class="lot-item__form" action="lot.php" method="post">
-
                       <p class="lot-item__form-item form__item <?=$classname; ?>">
                         <label for="cost">Ваша ставка</label>
                         <input id="cost" type="text" name="cost" placeholder="<?=$lot['step_rate']; ?>">
-                        <span class="form__error"><?=$errors['cost']; ?></span>
+                        <input class="visually-hidden" id="id_lot" type="text" name="id" value="<?=$id_lot; ?>">
+                        <span class="form__error"><?=$_GET['errors']; ?></span>
                       </p>
                       <button type="submit" class="button">Сделать ставку</button>
                     </form>
