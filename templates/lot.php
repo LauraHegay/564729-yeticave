@@ -33,7 +33,7 @@
                       </div>
                     </div>
                       <?php if ($show_form==1): ?>
-                      <?php $classname=isset($_GET['errors'])? "form__item--invalid":""; ?>
+                      <?php $classname=(isset($_GET['errors']))? "form__item--invalid":""; ?>
                     <form class="lot-item__form" action="lot.php" method="post">
                       <p class="lot-item__form-item form__item <?=$classname; ?>">
                         <label for="cost">Ваша ставка</label>
