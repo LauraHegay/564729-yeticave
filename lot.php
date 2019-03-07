@@ -6,6 +6,14 @@ $show_form=0;
 
 if (isset($_GET['id'])) {
     $id_lot=intval($_GET['id']);
+    $sql_rates="SELECT rates.sum_price, DATE_FORMAT(rates.date_registered,'%d.%m.%y %H:%i') as date_registered, rates.id_user, users.name as name  FROM rates
+JOIN users ON rates.id_user=users.id
+WHERE rates.id_lot=$id_lot
+ORDER BY rates.date_registered DESC";
+    $rates_count = mysqli_num_rows(mysqli_query($con, $sql_rates));
+    $result_rates = mysqli_query($con, $sql_rates);
+    $rates=object_in_array($result_rates , $con);
+
     $sql_lots = "SELECT title, date_end, start_price as sum_price, step_rate,  image_path, categories.name, description, user_id FROM lots
 JOIN categories ON lots.category_id=categories.id
 WHERE lots.id =$id_lot";
@@ -30,7 +38,9 @@ WHERE lots.id =$id_lot";
             'id_lot'=>$id_lot,
             'lot'=>$lots,
             'sum_price'=>$result_sum_lots,
-            'errors'=>$errors
+            'errors'=>$errors,
+            'rates'=>$rates,
+            'rates_count'=>$rates_count
         ]);
     }
     else {
@@ -47,6 +57,13 @@ else {
 
 if (isset($_POST['cost'])){
     $id_lot=$_POST['id'];
+    $sql_rates="SELECT rates.sum_price, DATE_FORMAT(rates.date_registered,'%d.%m.%y %H:%i') as date_registered, rates.id_user, users.name as name  FROM rates
+JOIN users ON rates.id_user=users.id
+WHERE rates.id_lot=$id_lot
+ORDER BY rates.date_registered DESC";
+    $rates_count = mysqli_num_rows(mysqli_query($con, $sql_rates));
+    $result_rates = mysqli_query($con, $sql_rates);
+    $rates=object_in_array($result_rates , $con);
     $sql_lots = "SELECT title, date_end, start_price as sum_price, step_rate,  image_path, categories.name, description, user_id FROM lots
 JOIN categories ON lots.category_id=categories.id
 WHERE lots.id =$id_lot";
