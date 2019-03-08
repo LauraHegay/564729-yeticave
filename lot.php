@@ -55,15 +55,32 @@ else {
     ]);
 }
 
-if (isset($_POST['cost'])){
+if (isset($_POST['cost']) and $is_auth == 1){
     $id_lot=$_POST['id'];
-    if ($is_auth == 1 and $_POST['user_id'] != $user_id and strtotime($_POST['date_end']) - strtotime('today') > 0) {
-           $rate = "SELECT * FROM rates WHERE rates.id_lot=$id_lot and rates.id_user=$user_id";
-            $rate_count = mysqli_num_rows(mysqli_query($con, $rate));
-            if ($rate_count == 0) {
+    $sql_rates="SELECT rates.sum_price, DATE_FORMAT(rates.date_registered,'%d.%m.%y %H:%i') as date_registered, rates.id_user, users.name as name  FROM rates
+JOIN users ON rates.id_user=users.id
+WHERE rates.id_lot=$id_lot
+ORDER BY rates.date_registered DESC";
+    $rates_count = mysqli_num_rows(mysqli_query($con, $sql_rates));
+    $result_rates = mysqli_query($con, $sql_rates);
+    $rates=object_in_array($result_rates , $con);
+    $sql_lots = "SELECT title, date_end, start_price as sum_price, step_rate,  image_path, categories.name, description, user_id FROM lots
+JOIN categories ON lots.category_id=categories.id
+WHERE lots.id =$id_lot";
+    $result_lots = mysqli_query($con, $sql_lots);
+    $lots=mysqli_fetch_assoc($result_lots);
+    if ($result_lots->num_rows ===1) {
+        $sum_lot="SELECT max(rates.sum_price) as sum_price from rates WHERE rates.id_lot=$id_lot";
+        $result_sum_lots = mysqli_fetch_assoc(mysqli_query($con, $sum_lot));
+        if(is_null($result_sum_lots['sum_price'])){
+            $result_sum_lots=['sum_price'=>$lots['sum_price']];
+        }
+        $rate = "SELECT * FROM rates WHERE rates.id_lot=$id_lot and rates.id_user=$user_id";
+        $rate_count = mysqli_num_rows(mysqli_query($con, $rate));
+        if ( $rate_count == 0 and $lots['user_id'] != $user_id and strtotime($lots['date_end']) - strtotime('today') > 0) {
                 if (!empty($_POST['cost'])) {
                     $rate = intval($_POST['cost']);
-                    if (!filter_var($rate, FILTER_VALIDATE_INT) or $rate < (intval($_POST['sum_price']) + intval($_POST['step_rate']))) {
+                    if (!filter_var($rate, FILTER_VALIDATE_INT) or $rate < (intval($result_sum_lots['sum_price']) + intval($lots['step_rate']))) {
                         $errors = 'Заполните поле "Ваша ставка" корректными данными';
                     } else {
                         $sql = 'INSERT INTO rates (date_registered, sum_price, id_user, id_lot) VALUES (NOW(), ?, ?, ?)';
@@ -75,10 +92,10 @@ if (isset($_POST['cost'])){
                         }
                     }
                 } else {
-                   $errors = 'Поле не заполнено';
+                    $errors = 'Поле не заполнено';
                 }
-            }
         }
+    }
     header("Location: lot.php?id=$id_lot&errors=$errors");
     exit();
 }
