@@ -23,9 +23,11 @@ if (!empty($completed_lots)){
     JOIN lots ON rates.id_lot=lots.id
     WHERE rates.id_lot=$id_lot
     ORDER BY rates.sum_price DESC";
-        $result_win_rate = mysqli_query($con, $sql_win_rate);
-        $records_count = mysqli_num_rows($result_win_rate);
+        $result_win_rate = mysqli_query($con, $sql_win_rate) or die("Ошибка " . mysqli_error($con));;
         $win_rate=mysqli_fetch_assoc($result_win_rate);
+        if (empty($win_rate)){
+            exit();
+        }
         $win_user_id=$win_rate['id_user'];
         $win_lot_id=$win_rate['id_lot'];
         $query ="UPDATE lots SET win_user_id='$win_user_id' WHERE id=$win_lot_id";
