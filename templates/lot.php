@@ -39,10 +39,6 @@
                         <label for="cost">Ваша ставка</label>
                         <input id="cost" type="text" name="cost" placeholder="<?=$lot['step_rate']; ?>">
                         <input class="visually-hidden" id="id_lot" type="text" name="id" value="<?=$id_lot; ?>">
-                        <input class="visually-hidden" id="user_id_lot" type="text" name="user_id" value="<?=$lot['user_id']; ?>">
-                        <input class="visually-hidden" id="date_end_lot" type="text" name="date_end" value="<?=$lot['date_end']; ?>">
-                        <input class="visually-hidden" id="sum_price_lot" type="text" name="sum_price" value="<?=$sum_price['sum_price']; ?>">
-                        <input class="visually-hidden" id="step_rate_lot" type="text" name="step_rate" value="<?=$lot['step_rate']; ?>">
                         <span class="form__error"><?=$_GET['errors']; ?></span>
                       </p>
                       <button type="submit" class="button">Сделать ставку</button>

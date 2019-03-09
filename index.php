@@ -2,6 +2,7 @@
 require_once('functions.php'); //подключаем сценарий с функцией-шаблонизатором
 require_once('data.php'); //подключаем сценарий с данными
 require_once('init.php');
+require_once('getwinner.php');
 
     $sql_lots = "SELECT lots.id as id_lot, title, start_price, image_path, categories.name, ifnull(max(rates.sum_price),lots.start_price) FROM lots
 JOIN categories ON lots.category_id=categories.id
