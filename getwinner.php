@@ -39,7 +39,7 @@ if (!empty($completed_lots)){
         $message = new Swift_Message();
         $message->setSubject("Ваша ставка победила");
         $message->setFrom(['keks@phpdemo.ru' => 'yeticave']);
-        $message->setBcc($win_user['email']);
+        $message->setTo($win_user['email']);
 
         $msg_content = include_template('email.php', ['win_rate' => $win_rate, 'win_user'=>$win_user]);
         $message->setBody($msg_content, 'text/html');
