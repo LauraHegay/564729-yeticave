@@ -35,7 +35,6 @@ if (!empty($completed_lots)){
 
         $sql_win_user="SELECT * FROM users WHERE id=$win_user_id";
         $result_win_user = mysqli_query($con, $sql_win_user);
-        $records_count = mysqli_num_rows($result_win_user);
         $win_user=mysqli_fetch_assoc($result_win_user);
 
 
