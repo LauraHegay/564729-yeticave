@@ -4,7 +4,7 @@ require_once('init.php');
 require_once './vendor/autoload.php';
 
 $sql_completed_lots="SELECT * FROM lots
-WHERE lots.win_user_id IS NULL AND lots.date_end<=CURRENT_DATE()";
+WHERE lots.win_user_id IS NULL AND lots.date_end<=CURRENT_DATE() AND lots.id IN (SELECT DISTINCT rates.id_lot FROM rates)";
 $result_completed_lots = mysqli_query($con, $sql_completed_lots);
 $completed_lots=object_in_array($result_completed_lots, $con);
 
@@ -25,9 +25,7 @@ if (!empty($completed_lots)){
     ORDER BY rates.sum_price DESC";
         $result_win_rate = mysqli_query($con, $sql_win_rate) or die("Ошибка " . mysqli_error($con));;
         $win_rate=mysqli_fetch_assoc($result_win_rate);
-        if (empty($win_rate)){
-            exit();
-        }
+
         $win_user_id=$win_rate['id_user'];
         $win_lot_id=$win_rate['id_lot'];
         $query ="UPDATE lots SET win_user_id='$win_user_id' WHERE id=$win_lot_id";
