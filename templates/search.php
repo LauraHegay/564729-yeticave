@@ -20,20 +20,21 @@
     </section>
   <?php if($page_count>1):?>
     <ul class="pagination-list">
+        <?php if($cur_page !== 1) : ?>
+      <li class="pagination-item pagination-item-prev"><a href="search.php/?search=<?=$search; ?>&page=<?=($cur_page-1); ?>">Назад</a></li>
+        <?php else: ?>
+          <li class="pagination-item pagination-item-prev"><a>Назад</a></li>
+        <?php endif; ?>
       <?php foreach ($pages as $page): ?>
-        <li class="pagination-item pagination-item-prev"><a href="search.php/?page<?= --$cur_page; ?>">Назад</a></li>
-        <li class="pagination-item <?php if ($page=$cur_page): ?>pagination-item-active<?php endif; ?>">
-          <a href="search.php/?page<?=$page; ?>"><?=$page; ?></a>
+        <li class="pagination-item <?php if ($page==$cur_page): ?>pagination-item-active<?php endif; ?>">
+          <a href="/search.php/?search=<?=$search; ?>&page=<?=$page; ?>"><?=$page; ?></a>
         </li>
       <?php endforeach; ?>
+        <?php if($cur_page !== $page_count) : ?>
+          <li class="pagination-item pagination-item-next"><a href="search.php/?search=<?=$search; ?>&page=<?=($cur_page+1); ?>">Вперед</a></li>
+        <?php else: ?>
+          <li class="pagination-item pagination-item-next"><a>Вперед</a></li>
+        <?php endif; ?>
     </ul>
   <?php endif; ?>
-<!--    <ul class="pagination-list">-->
-<!--        <li class="pagination-item pagination-item-prev"><a>Назад</a></li>-->
-<!--        <li class="pagination-item pagination-item-active"><a>1</a></li>-->
-<!--        <li class="pagination-item"><a href="#">2</a></li>-->
-<!--        <li class="pagination-item"><a href="#">3</a></li>-->
-<!--        <li class="pagination-item"><a href="#">4</a></li>-->
-<!--        <li class="pagination-item pagination-item-next"><a href="#">Вперед</a></li>-->
-<!--    </ul>-->
 </div>
