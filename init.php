@@ -1,7 +1,8 @@
 <?php
+error_reporting(-1);
 session_start();
 $is_auth=0;
-
+$user_name="";
 if (isset($_SESSION['user'])){
     $is_auth=1;
     $user_name = $_SESSION['user']['name'];

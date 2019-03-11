@@ -1,7 +1,7 @@
 <?php
 require_once('functions.php'); //подключаем сценарий с функцией-шаблонизатором
 require_once('init.php');
-
+$errors=[];
 if (!isset($user_name)) {
     http_response_code(403);
     header("Location: /");
@@ -10,7 +10,6 @@ if (!isset($user_name)) {
 if ($_SERVER['REQUEST_METHOD']=='POST'){
     $lot=$_POST;
     $required_fields=['lot-name','category','message','lot-rate','lot-step','lot-date'];
-    $errors=[];
     foreach ($lot as $key => $value){
         if ($key=="lot-rate"){
             if(!filter_var($value,FILTER_VALIDATE_INT)or $value<0 ){
@@ -69,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
     }
 }
 else {
-    $page_content = include_template('add.php', ['categories'=>$cat]);
+    $page_content = include_template('add.php', ['categories'=>$cat,'errors' => $errors]);
 }
 
 $layout_content = include_template('layout.php', [

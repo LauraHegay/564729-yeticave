@@ -3,7 +3,6 @@ require_once('functions.php'); //подключаем сценарий с фун
 require_once('init.php');
 $show_form=0;
 
-
 if (isset($_GET['id'])) {
     $id_lot=intval($_GET['id']);
     $sql_rates="SELECT rates.sum_price, DATE_FORMAT(rates.date_registered,'%d.%m.%y %H:%i') as date_registered, rates.id_user, users.name as name  FROM rates
@@ -38,7 +37,6 @@ WHERE lots.id =$id_lot";
             'id_lot'=>$id_lot,
             'lot'=>$lots,
             'sum_price'=>$result_sum_lots,
-            'errors'=>$errors,
             'rates'=>$rates,
             'rates_count'=>$rates_count
         ]);

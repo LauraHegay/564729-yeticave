@@ -1,12 +1,4 @@
-<nav class="nav">
-    <ul class="nav__list container">
-        <?php foreach ($categories as $value): ?>
-            <li class="nav__item">
-                <a href="all-lots.html"><?=$value['name']; ?></a>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-</nav>
+<?=include_template('site-menu.php', ['categories' => $categories]); ?>
 <?php $classname=count($errors)? "form--invalid":""; ?>
 <form class="form container <?=$classname; ?>" action="login.php" method="post">
     <h2>Вход</h2>

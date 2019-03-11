@@ -1,6 +1,5 @@
 <?php
 require_once('functions.php'); //подключаем сценарий с функцией-шаблонизатором
-require_once('data.php'); //подключаем сценарий с данными
 require_once('init.php');
 require_once('getwinner.php');
 
@@ -15,7 +14,7 @@ LIMIT 9";
     $lots=object_in_array($result_lots, $con);
 
 $page_content = include_template('index.php', [
-    'categories'=>$categories,
+    'categories'=>$cat,
     'advertisements'=>$lots]);
 $layout_content = include_template('layout.php', [
     'title' => 'Yeti - Главная страница',

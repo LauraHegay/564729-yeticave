@@ -1,11 +1,10 @@
 <?php
 require_once('functions.php'); //подключаем сценарий с функцией-шаблонизатором
 require_once('init.php');
-
+$errors = [];
 if ($_SERVER['REQUEST_METHOD']=='POST') {
     $form = $_POST;
     $required_fields = ['email', 'password'];
-    $errors = [];
 
     if (!empty($form['email'])) {
         if (!filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
@@ -43,13 +42,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     }
 }
 else {
-    $page_content = include_template('login.php', ['categories'=>$cat]);
+    $page_content = include_template('login.php', ['categories'=>$cat, 'errors' => $errors]);
 }
 
 $layout_content = include_template('layout.php', [
     'title' => 'Yeti - Авторизация',
     'content' => $page_content,
-    'categories' => $cat
+    'categories' => $cat,
+    'is_auth'=>$is_auth
 ]);
 
 print($layout_content);

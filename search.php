@@ -2,7 +2,6 @@
 require_once('functions.php'); //подключаем сценарий с функцией-шаблонизатором
 require_once('init.php');
 
-
 if (isset($_GET['search'])){
     $search = trim($_GET['search']);
     $cur_page = $_GET['page'] ?? 1;
@@ -37,12 +36,12 @@ if (isset($_GET['search'])){
                 'cur_page' => $cur_page
             ]);
         } else {
-            $message= "Ничего не найдено по вашему запросу";
             $page_content = include_template('search.php', [
                 'categories' => $cat,
                 'advertisements' => $lots,
                 'search'=>$search,
-                'message'=>$message
+                'message'=>"Ничего не найдено по вашему запросу",
+                'page_count' => $page_count
             ]);
         }
     }

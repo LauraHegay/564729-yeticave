@@ -2,10 +2,10 @@
 require_once('functions.php'); //подключаем сценарий с функцией-шаблонизатором
 require_once('init.php');
 
+$errors=[];
 if ($_SERVER['REQUEST_METHOD']=='POST'){
     $user=$_POST;
     $required_fields=['email','password','name','message'];
-    $errors=[];
     foreach ($user as $key => $value) {
         if ($key == "email") {
             if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
@@ -70,14 +70,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
     }
 }
 else {
-    $page_content = include_template('sing-up.php', ['categories'=>$cat]);
+    $page_content = include_template('sing-up.php', ['categories'=>$cat, 'errors' => $errors]);
 }
 
 $layout_content = include_template('layout.php', [
     'title' => 'Yeti - Регистрация',
     'user_name' => $user_name,
     'content' => $page_content,
-    'categories' => $cat
+    'categories' => $cat,
+    'is_auth'=>$is_auth
 ]);
 
 print($layout_content);

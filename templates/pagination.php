@@ -1,4 +1,4 @@
-<?php if($page_count>1):?>
+
     <ul class="pagination-list">
         <?php if($cur_page !== 1) : ?>
             <li class="pagination-item pagination-item-prev"><a href="search.php?search=<?=$search; ?>&page=<?=($cur_page-1); ?>">Назад</a></li>
@@ -16,4 +16,3 @@
             <li class="pagination-item pagination-item-next"><a>Вперед</a></li>
         <?php endif; ?>
     </ul>
-<?php endif; ?>
