@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
             }
         }
     }
-    if (isset($_FILES['photo2']['name'])){
+    if (!empty($_FILES['photo2']['name'])){
         $tmp_name=$_FILES['photo2']['tmp_name'];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $extension=pathinfo($_FILES['photo2']['name'],PATHINFO_EXTENSION);

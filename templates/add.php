@@ -44,7 +44,7 @@
         <label for="photo2">
           <span>+ Добавить</span>
         </label>
-        <span class="form__error">Загрузите фотографию</span>
+        <span class="form__error"><?=$errors['photo2'] ?></span>
       </div>
     </div>
     <div class="form__container-three">
