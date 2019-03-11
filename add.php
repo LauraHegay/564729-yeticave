@@ -2,7 +2,7 @@
 require_once('functions.php'); //подключаем сценарий с функцией-шаблонизатором
 require_once('init.php');
 $errors=[];
-if (!isset($user_name)) {
+if (empty($user_name)) {
     http_response_code(403);
     header("Location: /");
     exit();
