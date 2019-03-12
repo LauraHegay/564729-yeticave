@@ -2,7 +2,7 @@
 require_once('functions.php'); //подключаем сценарий с функцией-шаблонизатором
 require_once('init.php');
 $errors = [];
-if ($_SERVER['REQUEST_METHOD']=='POST') {
+if ($_SERVER['REQUEST_METHOD']==='POST') {
     $form = $_POST;
     $required_fields = ['email', 'password'];
 

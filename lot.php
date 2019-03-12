@@ -55,6 +55,7 @@ else {
 
 if (isset($_POST['cost']) and $is_auth == 1){
     $id_lot=$_POST['id'];
+    $errors="";
     $sql_rates="SELECT rates.sum_price, DATE_FORMAT(rates.date_registered,'%d.%m.%y %H:%i') as date_registered, rates.id_user, users.name as name  FROM rates
 JOIN users ON rates.id_user=users.id
 WHERE rates.id_lot=$id_lot

@@ -3,11 +3,11 @@ require_once('functions.php'); //подключаем сценарий с фун
 require_once('init.php');
 
 $errors=[];
-if ($_SERVER['REQUEST_METHOD']=='POST'){
+if ($_SERVER['REQUEST_METHOD']==='POST'){
     $user=$_POST;
     $required_fields=['email','password','name','message'];
     foreach ($user as $key => $value) {
-        if ($key == "email") {
+        if ($key ==="email") {
             if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
                 $errors[$key] = 'Заполните поле E-mail корректными данными';
             }
@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
         $user['user-avatar']='';
     }
     foreach($required_fields as $key){
+        $_POST[$key]=trim($_POST[$key]);
         if (empty($_POST[$key])) {
             $errors[$key]='Поле не заполнено';
         }

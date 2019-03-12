@@ -7,21 +7,21 @@ if (empty($user_name)) {
     header("Location: /");
     exit();
 }
-if ($_SERVER['REQUEST_METHOD']=='POST'){
+if ($_SERVER['REQUEST_METHOD']==='POST'){
     $lot=$_POST;
     $required_fields=['lot-name','category','message','lot-rate','lot-step','lot-date'];
     foreach ($lot as $key => $value){
-        if ($key=="lot-rate"){
+        if ($key==="lot-rate"){
             if(!filter_var($value,FILTER_VALIDATE_INT)or $value<0 ){
                 $errors[$key]='Заполните поле Ставка корректными данными';
             }
         }
-        elseif ($key=="lot-step")  {
+        elseif ($key==="lot-step")  {
             if(!filter_var($value,FILTER_VALIDATE_INT)or $value<0 or is_int($value)){
                 $errors[$key]='Заполните поле Шаг ставки корректными данными';
             }
         }
-        elseif ($key=="lot-date")  {
+        elseif ($key==="lot-date")  {
             $diff = strtotime($value)-strtotime('today');
             if(!check_date_format($value)or($diff <86400)){
                 $errors[$key]='Заполните поле Дата завершения ставки корректными данными';
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
         $errors['photo2']='Вы не загрузили файл';
     }
     foreach($required_fields as $key){
-        if (empty($_POST[$key])) {
+        if (empty($_POST[$key]) or !(trim($_POST[$key]))) {
             $errors[$key]='Поле не заполнено';
         }
     }
